@@ -1,27 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Pi Day Quiz</title>
-  </head>
-  <body>
-    <h1>Pi Day Quiz</h1>
-    <button onclick="showFact()">Click for a Pi Fact!</button>
-    <p id="fact"></p> 
-    <script>
-      function showFact() {
-        const facts = [ 
-          "Pi is approximately 3.14159.", 
-          "Pi is an irrational number, meaning it never ends or repeats.", 
-          "The symbol for Pi (π) was first used by Welsh mathematician William Jones in 1706.", 
-          "It is also known as 'Archimedes constant.'",
-          "The symbol for Pi was first used by Welsh mathematician William Jones in 1706.",
-          "Pi Day is celebrated on March 14th (3/14)."
-        ]; 
-        const randomFact = facts[Math.floor(Math.random() * facts.length)];
-        document.getElementById("fact").textContent = randomFact;
-      } 
-    </script> 
-  </body> 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pi Fact</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .pi-section {
+      margin-top: 50px;
+    }
+
+    #fact {
+      font-size: 18px;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    .pi-btn {
+      width: 200px;
+      height: 200px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 24px;
+      line-height: 200px;
+      cursor: pointer;
+      margin: 100px auto;
+      transition: background-color 0.3s;
+    }
+
+    .pi-btn:hover {
+      background-color: darkred;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="pi-section">
+    <h1>Pi Fact</h1>
+    <button class="pi-btn" onclick="showFact()">Click for Pi Fact!</button>
+    <p id="fact"></p>
+  </div>
+
+  <script>
+    function showFact() {
+      console.log("Button clicked!");
+      
+      const facts = [
+        "Pi is approximately 3.14159.",
+        "Pi is an irrational number, meaning it never ends or repeats.",
+        "The symbol for Pi (π) was first used by Welsh mathematician William Jones in 1706.",
+        "Pi Day is celebrated on March 14th (3/14).",
+        "Archimedes approximated Pi by inscribing and circumscribing polygons.",
+        "The Pi symbol (π) is derived from the Greek word 'perimeter'.",
+        "The value of Pi has been calculated to over 31 trillion digits as of 2019.",
+        "Pi is used in many formulas in mathematics, including in geometry, trigonometry, and calculus.",
+        "The first 10 digits of Pi are 3.1415926535.",
+        "Pi is involved in the calculation of the area of a circle: A = πr².",
+        "The first known calculation of Pi was by Archimedes of Syracuse around 250 BC.",
+        "Pi appears in Einstein’s field equations of general relativity.",
+        "The world record for reciting Pi from memory is over 70,000 digits!",
+        "NASA uses Pi for space exploration calculations.",
+        "Pi is often used in quantum physics and wave mechanics.",
+        "The Feynman Point is a sequence of six consecutive 9s in Pi, appearing at digit 762.",
+        "Pi is essential in calculating the volume of spheres, cones, and cylinders.",
+        "In 1897, a bill in Indiana attempted to legislate the value of Pi as 3.2!",
+        "The Babylonians estimated Pi as 3.125 over 4,000 years ago.",
+        "Pi has been studied for thousands of years, and mathematicians are still discovering new properties of it."
+      ];
+
+      const randomFact = facts[Math.floor(Math.random() * facts.length)];
+      document.getElementById("fact").textContent = randomFact;
+    }
+  </script>
+
+</body>
 </html>
