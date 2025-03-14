@@ -103,6 +103,25 @@
     #goToCircleGame:hover {
       background-color: #0056b3;
     }
+
+    /* Bottom left button for Draw a Circle game */
+    #goToCircleGameLeft {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #007BFF;
+      color: white;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #goToCircleGameLeft:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 <body>
@@ -128,6 +147,7 @@
 
   <!-- Button to switch to Draw a Circle Game -->
   <button id="goToCircleGame" onclick="showCircleGame()">Go to Draw a Circle Game</button>
+  <button id="goToCircleGameLeft" onclick="showCircleGame()">Go to Draw a Circle Game</button>
 
   <script>
     // Pi Fact Functionality
@@ -147,7 +167,16 @@
         "Pi is involved in the calculation of the area of a circle: A = πr².",
         "The digits of Pi are randomly distributed. No pattern has been found, and it has inspired many mathematical investigations.",
         "The first 10 digits of Pi are 3.1415926535.",
-        "There are Pi-inspired mathematical constants, like Pi-squared (π²) and Pi-cubed (π³), which also appear in various formulas."
+        "There are Pi-inspired mathematical constants, like Pi-squared (π²) and Pi-cubed (π³), which also appear in various formulas.",
+        "Pi is used in computer algorithms for random number generation and simulations.",
+        "The Feynman Point, named after physicist Richard Feynman, is a sequence of six consecutive 9s that occur at the 762nd decimal place of Pi.",
+        "The ancient Greek mathematician Archimedes developed an algorithm to approximate Pi by calculating the perimeters of polygons inscribed and circumscribed around a circle.",
+        "In 2009, the U.S. House of Representatives passed a resolution recognizing March 14th as National Pi Day.",
+        "Pi appears in many formulas in physics and engineering, such as the period of a pendulum and the frequency of a vibrating string.",
+        "The search for more digits of Pi has driven advances in computer technology and numerical algorithms.",
+        "Pi is transcendental, meaning it is not the root of any non-zero polynomial equation with rational coefficients.",
+        "Pi is used in various fields, including geometry, trigonometry, calculus, complex numbers, and statistics.",
+        "The symbol π has been in use for over 250 years."
       ];
       const randomFact = facts[Math.floor(Math.random() * facts.length)];
       document.getElementById("fact").textContent = randomFact;
@@ -231,6 +260,8 @@
       document.querySelector('.pi-btn').style.display = 'none';
       // Hide the "Go to Draw a Circle Game" button
       document.getElementById('goToCircleGame').style.display = 'none';
+      // Hide the bottom-left "Go to Draw a Circle Game" button
+      document.getElementById('goToCircleGameLeft').style.display = 'none';
     }
   </script>
 
