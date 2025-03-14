@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pi Fact</title>
+  <title>Pi Fact & Perfect Circle Game</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -17,8 +17,7 @@
       color: #333;
     }
 
-    /* Pi Fact Section */
-    .pi-section {
+    .pi-section, .circle-section {
       margin-top: 50px;
     }
 
@@ -28,7 +27,6 @@
       margin-top: 10px;
     }
 
-    /* Big Red Circle Button */
     .pi-btn {
       width: 200px;
       height: 200px;
@@ -47,7 +45,6 @@
       background-color: darkred;
     }
 
-    /* Draw a Circle Game Section */
     .circle-section {
       display: none;
       margin-top: 50px;
@@ -70,22 +67,19 @@
       margin-top: 20px;
     }
 
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #4CAF50;
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #ff4500;
       color: white;
+      padding: 10px 20px;
       border: none;
       border-radius: 5px;
+      font-size: 16px;
       cursor: pointer;
-      margin-top: 20px;
     }
 
-    button:hover {
-      background-color: #45a049;
-    }
-
-    /* Bottom right button for Draw a Circle game */
     #goToCircleGame {
       position: fixed;
       bottom: 20px;
@@ -103,54 +97,27 @@
     #goToCircleGame:hover {
       background-color: #0056b3;
     }
-
-    /* Bottom left button for Draw a Circle game */
-    #goToCircleGameLeft {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      background-color: #007BFF;
-      color: white;
-      padding: 15px 25px;
-      border: none;
-      border-radius: 5px;
-      font-size: 18px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    #goToCircleGameLeft:hover {
-      background-color: #0056b3;
-    }
   </style>
 </head>
 <body>
 
-  <!-- Pi Fact Section -->
   <div class="pi-section">
     <h1>Pi Fact</h1>
     <button class="pi-btn" onclick="showFact()">Click for Pi Fact!</button>
     <p id="fact"></p>
   </div>
 
-  <!-- Draw a Circle Game Section -->
   <div class="circle-section">
-    <h1>Draw a Circle Game</h1>
-    <p id="instructions">Click and drag to draw a circle inside the canvas. Try to make it a perfect circle!</p>
-
+    <button class="back-btn" onclick="goBack()">Go Back</button>
+    <h1>The Perfect Circle Game</h1>
+    <p id="instructions">Click and hold to draw a perfect circle around the black dot!</p>
     <canvas id="gameCanvas" width="500" height="500"></canvas>
-
-    <br>
-    <button onclick="resetGame()">Reset Game</button>
     <p id="result"></p>
   </div>
 
-  <!-- Button to switch to Draw a Circle Game -->
-  <button id="goToCircleGame" onclick="showCircleGame()">Go to Draw a Circle Game</button>
-  <button id="goToCircleGameLeft" onclick="showCircleGame()">Go to Draw a Circle Game</button>
+  <button id="goToCircleGame" onclick="showCircleGame()">Go to Perfect Circle Game</button>
 
   <script>
-    // Pi Fact Functionality
     function showFact() {
       const facts = [
         "Pi is approximately 3.14159.",
@@ -161,107 +128,101 @@
         "The Pi symbol (π) is derived from the Greek word 'perimeter'.",
         "The value of Pi has been calculated to over 31 trillion digits as of 2019.",
         "Pi is used in many formulas in mathematics, including in the areas of geometry, trigonometry, and calculus.",
-        "In 2015, a group of mathematicians calculated Pi to over 13 trillion digits, setting a new world record.",
         "Pi has been known and used since ancient civilizations like the Babylonians and Egyptians.",
-        "Pi has appeared in various cultures, such as in ancient India, where it was approximated as 3.16 by mathematicians like Aryabhata.",
-        "Pi is involved in the calculation of the area of a circle: A = πr².",
-        "The digits of Pi are randomly distributed. No pattern has been found, and it has inspired many mathematical investigations.",
         "The first 10 digits of Pi are 3.1415926535.",
-        "There are Pi-inspired mathematical constants, like Pi-squared (π²) and Pi-cubed (π³), which also appear in various formulas.",
-        "Pi is used in computer algorithms for random number generation and simulations.",
-        "The Feynman Point, named after physicist Richard Feynman, is a sequence of six consecutive 9s that occur at the 762nd decimal place of Pi.",
-        "The ancient Greek mathematician Archimedes developed an algorithm to approximate Pi by calculating the perimeters of polygons inscribed and circumscribed around a circle.",
-        "In 2009, the U.S. House of Representatives passed a resolution recognizing March 14th as National Pi Day.",
-        "Pi appears in many formulas in physics and engineering, such as the period of a pendulum and the frequency of a vibrating string.",
-        "The search for more digits of Pi has driven advances in computer technology and numerical algorithms.",
-        "Pi is transcendental, meaning it is not the root of any non-zero polynomial equation with rational coefficients.",
-        "Pi is used in various fields, including geometry, trigonometry, calculus, complex numbers, and statistics.",
-        "The symbol π has been in use for over 250 years."
+        "NASA uses Pi for interplanetary navigation.",
+        "Albert Einstein’s birthday coincides with Pi Day (March 14).",
+        "Computers have been used to calculate Pi to millions of digits since the 20th century.",
+        "Some people memorize thousands of digits of Pi as a challenge.",
+        "Pi is used in physics equations, including Einstein’s field equations.",
+        "Pi appears in quantum mechanics, statistics, and even in nature.",
+        "The Guinness World Record for reciting Pi is over 70,000 digits.",
+        "The digits of Pi have been used to create music and art.",
+        "Pi has a connection to prime numbers in number theory.",
+        "Pi was originally estimated by the ancient Greeks using geometry.",
+        "Some scientists believe Pi’s digits are truly random.",
+        "Many formulas in engineering and physics rely on Pi’s properties.",
+        "Pi is found in wave mechanics and electromagnetic theories.",
+        "You can approximate Pi by throwing needles on a lined surface (Buffon’s Needle Experiment).",
+        "Pi appears in Einstein’s equation for general relativity.",
+        "The Great Pyramid of Giza has dimensions that approximate Pi.",
+        "Pi is related to Euler’s famous equation: e^(iπ) + 1 = 0.",
+        "Pi’s endless nature has fascinated mathematicians for centuries.",
+        "There’s a Pi mnemonic poem to help remember its digits!"
       ];
-      const randomFact = facts[Math.floor(Math.random() * facts.length)];
-      document.getElementById("fact").textContent = randomFact;
+      document.getElementById("fact").textContent = facts[Math.floor(Math.random() * facts.length)];
     }
 
-    // Draw a Circle Game Functionality
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-    let isDrawing = false;
-    let startX, startY, currentX, currentY;
-
-    // To track the circle drawn by the user
-    let drawnCircle = null;
-
-    // Function to start drawing
-    canvas.addEventListener('mousedown', (e) => {
-      isDrawing = true;
-      startX = e.offsetX;
-      startY = e.offsetY;
-      drawnCircle = { x: startX, y: startY, radius: 0 }; // Initialize the circle
-    });
-
-    // Function to keep drawing while dragging
-    canvas.addEventListener('mousemove', (e) => {
-      if (!isDrawing) return;
-      currentX = e.offsetX;
-      currentY = e.offsetY;
-
-      // Calculate the radius (distance from the starting point)
-      const radius = Math.sqrt(Math.pow(currentX - startX, 2) + Math.pow(currentY - startY, 2));
-
-      // Clear the canvas and redraw the circle
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.beginPath();
-      ctx.arc(startX, startY, radius, 0, Math.PI * 2);
-      ctx.stroke();
-      
-      drawnCircle.radius = radius; // Update radius of drawn circle
-    });
-
-    // Function to finish drawing when mouse is released
-    canvas.addEventListener('mouseup', () => {
-      isDrawing = false;
-
-      // Check if the circle drawn is a "perfect" circle
-      checkCircle(drawnCircle);
-    });
-
-    // Function to check if the circle is perfect
-    function checkCircle(circle) {
-      // Assuming a "perfect" circle means no major distortion.
-      const radius = circle.radius;
-
-      // Here, the check is simple: if the drawn circle radius is close to the ideal circle's radius
-      const perfectRadius = 50; // Ideal radius for the game
-
-      // Allow for a small tolerance, say 10% difference
-      const tolerance = 0.1;
-      if (Math.abs(radius - perfectRadius) <= perfectRadius * tolerance) {
-        document.getElementById('result').textContent = "Perfect Circle! You did it!";
-        document.getElementById('result').style.color = 'green';
-      } else {
-        document.getElementById('result').textContent = "Not a perfect circle. Try again!";
-        document.getElementById('result').style.color = 'red';
-      }
-    }
-
-    // Reset the game
-    function resetGame() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      document.getElementById('result').textContent = "";
-    }
-
-    // Show the Draw a Circle Game
     function showCircleGame() {
-      // Hide Pi Fact Section
       document.querySelector('.pi-section').style.display = 'none';
-      // Show Draw a Circle Section
       document.querySelector('.circle-section').style.display = 'block';
-      // Hide Pi Button
-      document.querySelector('.pi-btn').style.display = 'none';
-      // Hide the "Go to Draw a Circle Game" button
       document.getElementById('goToCircleGame').style.display = 'none';
-      // Hide the bottom-left "Go to Draw a Circle Game" button
-      document.getElementById('goToCircleGameLeft').style.display = 'none';
+      initGame();
+    }
+
+    function goBack() {
+      document.querySelector('.pi-section').style.display = 'block';
+      document.querySelector('.circle-section').style.display = 'none';
+      document.getElementById('goToCircleGame').style.display = 'block';
+    }
+
+    function initGame() {
+      const canvas = document.getElementById('gameCanvas');
+      const ctx = canvas.getContext('2d');
+
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw the black dot in the center
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 5, 0, Math.PI * 2);
+      ctx.fillStyle = 'black';
+      ctx.fill();
+
+      let drawing = false;
+      let startX, startY;
+
+      canvas.onmousedown = function (e) {
+        drawing = true;
+        startX = e.offsetX;
+        startY = e.offsetY;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+      };
+
+      canvas.onmousemove = function (e) {
+        if (drawing) {
+          ctx.lineTo(e.offsetX, e.offsetY);
+          ctx.stroke();
+        }
+      };
+
+      canvas.onmouseup = function (e) {
+        if (drawing) {
+          drawing = false;
+          ctx.closePath();
+
+          // Calculate the distance from the start point to the end point
+          const endX = e.offsetX;
+          const endY = e.offsetY;
+          const distX = endX - startX;
+          const distY = endY - startY;
+          const distance = Math.sqrt(distX * distX + distY * distY);
+
+          // Calculate the radius and check if it's close to the perfect circle radius
+          const perfectRadius = Math.sqrt(centerX * centerX + centerY * centerY) - 5; // Subtract the dot radius
+          const tolerance = 20; // Allowable tolerance in pixels
+
+          if (Math.abs(distance - perfectRadius) <= tolerance) {
+            document.getElementById('result').textContent = 'Great job! You drew a perfect circle!';
+          } else {
+            document.getElementById('result').textContent = 'Not quite! Try again to draw a perfect circle.';
+          }
+        }
+      };
     }
   </script>
 
