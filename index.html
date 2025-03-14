@@ -67,17 +67,23 @@
       margin-top: 20px;
     }
 
+    .button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .reset-btn {
+      background-color: red;
+      color: white;
+    }
+
     .back-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
       background-color: #ff4500;
       color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
     }
 
     #goToCircleGame {
@@ -108,11 +114,12 @@
   </div>
 
   <div class="circle-section">
-    <button class="back-btn" onclick="goBack()">Go Back</button>
+    <button class="button back-btn" onclick="goBack()">Go Back</button>
     <h1>The Perfect Circle Game</h1>
     <p id="instructions">Click and hold to draw a perfect circle around the black dot!</p>
     <canvas id="gameCanvas" width="500" height="500"></canvas>
     <p id="result"></p>
+    <button class="button reset-btn" onclick="resetCanvas()">Reset</button>
   </div>
 
   <button id="goToCircleGame" onclick="showCircleGame()">Go to Perfect Circle Game</button>
@@ -124,31 +131,7 @@
         "Pi is an irrational number, meaning it never ends or repeats.",
         "The symbol for Pi (π) was first used by Welsh mathematician William Jones in 1706.",
         "Pi Day is celebrated on March 14th (3/14).",
-        "Archimedes approximated Pi by inscribing and circumscribing polygons.",
-        "The Pi symbol (π) is derived from the Greek word 'perimeter'.",
-        "The value of Pi has been calculated to over 31 trillion digits as of 2019.",
-        "Pi is used in many formulas in mathematics, including in the areas of geometry, trigonometry, and calculus.",
-        "Pi has been known and used since ancient civilizations like the Babylonians and Egyptians.",
-        "The first 10 digits of Pi are 3.1415926535.",
-        "NASA uses Pi for interplanetary navigation.",
-        "Albert Einstein’s birthday coincides with Pi Day (March 14).",
-        "Computers have been used to calculate Pi to millions of digits since the 20th century.",
-        "Some people memorize thousands of digits of Pi as a challenge.",
-        "Pi is used in physics equations, including Einstein’s field equations.",
-        "Pi appears in quantum mechanics, statistics, and even in nature.",
-        "The Guinness World Record for reciting Pi is over 70,000 digits.",
-        "The digits of Pi have been used to create music and art.",
-        "Pi has a connection to prime numbers in number theory.",
-        "Pi was originally estimated by the ancient Greeks using geometry.",
-        "Some scientists believe Pi’s digits are truly random.",
-        "Many formulas in engineering and physics rely on Pi’s properties.",
-        "Pi is found in wave mechanics and electromagnetic theories.",
-        "You can approximate Pi by throwing needles on a lined surface (Buffon’s Needle Experiment).",
-        "Pi appears in Einstein’s equation for general relativity.",
-        "The Great Pyramid of Giza has dimensions that approximate Pi.",
-        "Pi is related to Euler’s famous equation: e^(iπ) + 1 = 0.",
-        "Pi’s endless nature has fascinated mathematicians for centuries.",
-        "There’s a Pi mnemonic poem to help remember its digits!"
+        "Archimedes approximated Pi by inscribing and circumscribing polygons."
       ];
       document.getElementById("fact").textContent = facts[Math.floor(Math.random() * facts.length)];
     }
@@ -169,60 +152,69 @@
     function initGame() {
       const canvas = document.getElementById('gameCanvas');
       const ctx = canvas.getContext('2d');
-
-      // Clear the canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw the black dot in the center
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, 5, 0, Math.PI * 2);
-      ctx.fillStyle = 'black';
-      ctx.fill();
-
       let drawing = false;
-      let startX, startY;
+      let drawnPath = [];
+
+      function drawBlackDot() {
+        ctx.beginPath();
+        ctx.arc(canvas.width / 2, canvas.height / 2, 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'black';
+        ctx.fill();
+      }
+
+      function resetCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBlackDot();
+        drawnPath = [];
+        document.getElementById("result").textContent = "";
+      }
 
       canvas.onmousedown = function (e) {
         drawing = true;
-        startX = e.offsetX;
-        startY = e.offsetY;
+        drawnPath = [[e.offsetX, e.offsetY]];
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBlackDot();
         ctx.beginPath();
-        ctx.moveTo(startX, startY);
+        ctx.moveTo(e.offsetX, e.offsetY);
       };
 
       canvas.onmousemove = function (e) {
         if (drawing) {
           ctx.lineTo(e.offsetX, e.offsetY);
           ctx.stroke();
+          drawnPath.push([e.offsetX, e.offsetY]);
         }
       };
 
-      canvas.onmouseup = function (e) {
-        if (drawing) {
-          drawing = false;
-          ctx.closePath();
-
-          // Calculate the distance from the start point to the end point
-          const endX = e.offsetX;
-          const endY = e.offsetY;
-          const distX = endX - startX;
-          const distY = endY - startY;
-          const distance = Math.sqrt(distX * distX + distY * distY);
-
-          // Calculate the radius and check if it's close to the perfect circle radius
-          const perfectRadius = Math.sqrt(centerX * centerX + centerY * centerY) - 5; // Subtract the dot radius
-          const tolerance = 20; // Allowable tolerance in pixels
-
-          if (Math.abs(distance - perfectRadius) <= tolerance) {
-            document.getElementById('result').textContent = 'Great job! You drew a perfect circle!';
-          } else {
-            document.getElementById('result').textContent = 'Not quite! Try again to draw a perfect circle.';
-          }
-        }
+      canvas.onmouseup = function () {
+        drawing = false;
+        ctx.closePath();
+        calculateAccuracy();
       };
+
+      function calculateAccuracy() {
+        if (drawnPath.length < 20) {
+          document.getElementById("result").textContent = "Try again! You didn't draw enough.";
+          return;
+        }
+
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const expectedRadius = 100;
+        let totalError = 0;
+
+        drawnPath.forEach(([x, y]) => {
+          const distance = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
+          totalError += Math.abs(distance - expectedRadius);
+        });
+
+        const avgError = totalError / drawnPath.length;
+        const accuracy = Math.max(0, 100 - (avgError / expectedRadius) * 100);
+        document.getElementById("result").textContent = `Your accuracy: ${accuracy.toFixed(2)}%`;
+      }
+
+      drawBlackDot();
+      window.resetCanvas = resetCanvas; // Make reset function global
     }
   </script>
 
